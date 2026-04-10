@@ -4,17 +4,16 @@ import lombok.Getter;
 
 import java.util.List;
 
-@Getter
-public class AventureiroException extends RuntimeException
-{
+public class AventureiroException extends RuntimeException {
+    private final ErroCatalogo tipo;
+    private final List<String> detalhes;
 
-    private final ErroCatalogo _tipo;
-    private final List<String> _detalhes;
-
-    public AventureiroException(ErroCatalogo _tipo, List<String> _detalhes)
-    {
-        super(_tipo.getMensagem());
-        this._tipo = _tipo;
-        this._detalhes = _detalhes;
+    public AventureiroException(ErroCatalogo tipo, List<String> detalhes) {
+        super(tipo.getMensagem());
+        this.tipo = tipo;
+        this.detalhes = detalhes;
     }
+
+    public ErroCatalogo getTipo() { return tipo; }
+    public List<String> getDetalhes() { return detalhes; }
 }

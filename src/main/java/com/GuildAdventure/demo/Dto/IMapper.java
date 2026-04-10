@@ -1,21 +1,41 @@
 package com.GuildAdventure.demo.Dto;
 
-import com.GuildAdventure.demo.Domain.entities.AventureiroEntity;
+import com.GuildAdventure.demo.Domain.Model.Audit.entities.OrganizacoesEntity;
+import com.GuildAdventure.demo.Domain.Model.Aventura.entities.AventureiroEntity;
+import com.GuildAdventure.demo.Domain.Model.Aventura.entities.MissaoEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface IMapper
 {
+
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "status", ignore = true)
+    @Mapping(target = "ativo", ignore = true)
+    @Mapping(target = "dataCriacao", ignore = true)
+    @Mapping(target = "dataAtualizacao", ignore = true)
+    @Mapping(target = "usuarioCadastro", source = "usuario_cadastrado_id")
     @Mapping(target = "companheiro", ignore = true)
-    AventureiroEntity toEntity(AventureiroRequest request);
+    @Mapping(target = "missoes", ignore = true)
+    @Mapping(target = "organizacao", source = "organizacao_id")
+    AventureiroEntity toEntity(CreateAventureiroRequest request);
+
+    @Mapping(target = "id", source = "aventureiro.id")
+    @Mapping(target = "nome", source = "aventureiro.nome")
+    @Mapping(target = "classe", source = "aventureiro.classe")
+    @Mapping(target = "nivel", source = "aventureiro.nivel")
+    @Mapping(target = "status", source = "aventureiro.ativo")
+    @Mapping(target = "companheiro", source = "aventureiro.companheiro") //
+    @Mapping(target = "quantidadeTotalDeMissoes", source = "totalMissoes")
+    @Mapping(target = "ultimaMissao", source = "ultima")
+    AventureiroResponse toResponse(
+            AventureiroEntity aventureiro,
+            Long totalMissoes,
+            MissaoEntity ultima
+    );
 
 
-    AventureiroResponse toResponse(AventureiroEntity aventureiro);
-
-    @Mapping(target = "status", ignore = true)
-    @Mapping(target = "companheiro", ignore = true)
+    @Mapping(target = "status" , source = "ativo")
     AventureiroResponseSimples toSimpleResponse(AventureiroEntity aventureiro);
+
 }
