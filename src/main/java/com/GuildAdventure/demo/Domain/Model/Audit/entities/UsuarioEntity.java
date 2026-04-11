@@ -16,8 +16,7 @@ import java.util.List;
         uniqueConstraints = @UniqueConstraint(columnNames = {"organizacao_id", "email"}))
 @Getter
 @Setter
-public class UsuarioEntity
-{
+public class UsuarioEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -44,24 +43,22 @@ public class UsuarioEntity
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "organizacao_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private OrganizacoesEntity organizacao_id;
+    private OrganizacoesEntity organizacao;
 
-    @OneToMany(mappedBy = "id")
-    private List<RolesEntity> papeis;
+    @OneToMany(mappedBy = "usuario")
+    private List<User_RolesEntity> userRoles;
 
-    @OneToOne(mappedBy = "usuarioCadastro")
-    private AventureiroEntity aventureiro;
-
+    @OneToMany(mappedBy = "usuarioCadastro")
+    private List<AventureiroEntity> aventureirosCadastrados;
 
     @PrePersist
-    public void OnCreate()
-    {
+    public void OnCreate() {
         this.created_at = OffsetDateTime.now();
         this.updated_at = OffsetDateTime.now();
     }
+
     @PreUpdate
-    public void OnUpdate()
-    {
+    public void OnUpdate() {
         this.updated_at = OffsetDateTime.now();
     }
 }

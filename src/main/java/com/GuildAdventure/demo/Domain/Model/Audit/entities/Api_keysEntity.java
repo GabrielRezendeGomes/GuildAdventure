@@ -21,7 +21,7 @@ public class Api_keysEntity{
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "organizacao_id", nullable = false)
-    private OrganizacoesEntity organizacao_id;
+    private OrganizacoesEntity organizacao;
 
     @Column(name = "nome" ,nullable = false, length = 120)
     private String nome;

@@ -21,9 +21,3 @@ public class AventureiroResponseSimples
 
 
 
-    //Identificador
-    //Nome
-    //Classe
-    //Nível
-    //Status
-

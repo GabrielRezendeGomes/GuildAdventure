@@ -2,6 +2,7 @@ package com.GuildAdventure.demo.Domain.Model.Audit.entities;
 
 import com.GuildAdventure.demo.Domain.Model.Aventura.entities.AventureiroEntity;
 import com.GuildAdventure.demo.Domain.Model.Aventura.entities.MissaoEntity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -29,12 +30,13 @@ public class OrganizacoesEntity
     private OffsetDateTime createdAt;
 
     @OneToMany(mappedBy = "organizacao")
+    @JsonIgnore
     private List<AventureiroEntity> aventureiros;
 
-    @OneToMany(mappedBy = "organizacao_id")
+    @OneToMany(mappedBy = "organizacao")
     private Set<UsuarioEntity> usuarios = new HashSet<>();
 
-    @OneToMany(mappedBy = "organizacao_id")
+    @OneToMany(mappedBy = "organizacao")
     private Set<Api_keysEntity> apiKeys = new HashSet<>();
 
     @OneToMany(mappedBy = "organizacao")

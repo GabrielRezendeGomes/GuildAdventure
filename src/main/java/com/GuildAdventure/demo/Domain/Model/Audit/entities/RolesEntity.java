@@ -15,8 +15,7 @@ import java.util.Set;
         uniqueConstraints = @UniqueConstraint(columnNames = {"organizacao_id", "nome"}))
 @Getter
 @Setter
-public class RolesEntity
-{
+public class RolesEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -37,17 +36,15 @@ public class RolesEntity
     @OneToMany(mappedBy = "role")
     private List<User_RolesEntity> usuariosNoPapel;
 
-
     @ManyToMany
-    @JoinTable(name = "permissions",
+    @JoinTable(name = "role_permissions",
+            schema = "audit",
             joinColumns = @JoinColumn(name = "role_id"),
-            inverseJoinColumns = @JoinColumn(name = "permissions_id"))
+            inverseJoinColumns = @JoinColumn(name = "permission_id"))
     private Set<PermissionsEntity> permissions = new HashSet<>();
 
     @PrePersist
-    public void OnCreate()
-    {
+    public void OnCreate() {
         this.createdAt = OffsetDateTime.now();
     }
-
 }

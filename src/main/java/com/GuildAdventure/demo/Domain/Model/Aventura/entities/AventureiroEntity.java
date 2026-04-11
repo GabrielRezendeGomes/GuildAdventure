@@ -44,11 +44,11 @@ public class AventureiroEntity {
     @JoinColumn(name = "organizacao_id", nullable = false)
     private OrganizacoesEntity organizacao;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "usuario_cadastro_id", nullable = false)
     private UsuarioEntity usuarioCadastro;
 
-    @OneToOne(mappedBy = "aventureiro")
+    @OneToOne(mappedBy = "aventureiro", cascade = CascadeType.ALL)
     private CompanheiroEntity companheiro;
 
     @Column(name = "data_criacao")
@@ -60,22 +60,13 @@ public class AventureiroEntity {
     @OneToMany(mappedBy = "aventureiroid")
     private Set<Participacao_missao> missoes = new HashSet<>();
 
-
     @PrePersist
-    public void OnCreate()
-    {
+    public void OnCreate() {
         this.dataCriacao = OffsetDateTime.now();
     }
 
     @PreUpdate
-    public void OnUpdate()
-    {
+    public void OnUpdate() {
         this.dataAtualizacao = OffsetDateTime.now();
     }
-
-
-
-
-
-
 }

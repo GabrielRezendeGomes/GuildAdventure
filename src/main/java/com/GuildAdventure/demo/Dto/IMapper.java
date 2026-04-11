@@ -14,10 +14,10 @@ public interface IMapper
     @Mapping(target = "ativo", ignore = true)
     @Mapping(target = "dataCriacao", ignore = true)
     @Mapping(target = "dataAtualizacao", ignore = true)
-    @Mapping(target = "usuarioCadastro", source = "usuario_cadastrado_id")
+    @Mapping(target = "usuarioCadastro", ignore = true)
     @Mapping(target = "companheiro", ignore = true)
     @Mapping(target = "missoes", ignore = true)
-    @Mapping(target = "organizacao", source = "organizacao_id")
+    @Mapping(target = "organizacao", ignore = true)
     AventureiroEntity toEntity(CreateAventureiroRequest request);
 
     @Mapping(target = "id", source = "aventureiro.id")
