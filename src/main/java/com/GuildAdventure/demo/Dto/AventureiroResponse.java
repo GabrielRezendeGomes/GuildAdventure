@@ -13,9 +13,9 @@ import java.util.Optional;
 @Getter
 @Setter
 @AllArgsConstructor
-@NoArgsConstructor // Sempre bom ter para o Jackson (JSON)
+@NoArgsConstructor
 public class AventureiroResponse {
-    private Long id; // Use Long (Wrapper)
+    private Long id;
     private String nome;
     private ClassTypeEnum classe;
     private int nivel;

@@ -6,12 +6,14 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Immutable;
 
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 
 @Entity
 @Table(name = "vw_painel_tatico_missao", schema = "operacoes")
+@Immutable
 @Getter
 @Setter
 public class PainelTaticoMissaoEntity {

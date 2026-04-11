@@ -27,7 +27,7 @@ public class ProdutoElasticService {
         this.esClient = esClient;
     }
 
-    // --- PARTE A: BUSCAS TEXTUAIS ---
+
     public List<ProdutoDocument> buscarPorNome(String termo) {
         Criteria criteria = new Criteria("nome").matches(termo);
         return executarQuery(new CriteriaQuery(criteria));
@@ -53,7 +53,7 @@ public class ProdutoElasticService {
         return executarQuery(new StringQuery(jsonQuery));
     }
 
-    // --- PARTE B: BUSCAS COM FILTROS ---
+
     public List<ProdutoDocument> buscarComFiltro(String termo, String categoria) {
         Criteria criteria = new Criteria("descricao").matches(termo).and("categoria").is(categoria);
         return executarQuery(new CriteriaQuery(criteria));
@@ -76,10 +76,10 @@ public class ProdutoElasticService {
                 .getSearchHits().stream().map(SearchHit::getContent).collect(Collectors.toList());
     }
 
-    // --- PARTE C: AGREGAÇÕES ---
+
     public Map<String, Long> agregacaoPorCategoria() throws IOException {
         SearchResponse<Void> response = esClient.search(s -> s.index("guilda_loja").size(0)
-                // AQUI: Tiramos o .keyword e deixamos apenas "categoria"
+
                 .aggregations("por_categoria", a -> a.terms(t -> t.field("categoria"))), Void.class);
         Map<String, Long> result = new HashMap<>();
         response.aggregations().get("por_categoria").sterms().buckets().array().forEach(b -> result.put(b.key().stringValue(), b.docCount()));
@@ -88,7 +88,7 @@ public class ProdutoElasticService {
 
     public Map<String, Long> agregacaoPorRaridade() throws IOException {
         SearchResponse<Void> response = esClient.search(s -> s.index("guilda_loja").size(0)
-                // AQUI: Tiramos o .keyword e deixamos apenas "raridade"
+
                 .aggregations("por_raridade", a -> a.terms(t -> t.field("raridade"))), Void.class);
         Map<String, Long> result = new HashMap<>();
         response.aggregations().get("por_raridade").sterms().buckets().array().forEach(b -> result.put(b.key().stringValue(), b.docCount()));

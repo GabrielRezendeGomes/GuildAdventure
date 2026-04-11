@@ -1,6 +1,5 @@
 package com.GuildAdventure.demo.Service.Validations.AventureiroValidations;
 
-
 import com.GuildAdventure.demo.Dto.CreateAventureiroRequest;
 import com.GuildAdventure.demo.Exception.AventureiroExceptionService;
 import com.GuildAdventure.demo.Exception.ErroCatalogo;
@@ -11,7 +10,6 @@ import org.springframework.stereotype.Component;
 public class AventureiroValidaOrganizacao implements IAventureiroValidate {
 
     private final IOrganizacaoRepository organizacaoRepository;
-
     private final AventureiroExceptionService exceptionService;
 
     public AventureiroValidaOrganizacao(AventureiroExceptionService exceptionService, IOrganizacaoRepository organizacaoRepository){
@@ -20,19 +18,13 @@ public class AventureiroValidaOrganizacao implements IAventureiroValidate {
     }
 
     @Override
-    public void validar(CreateAventureiroRequest request)
-    {
-        if(request.getOrganizacao_id() == 0)
-        {
-            exceptionService.lancar(ErroCatalogo.AVENTUREIRO_DEVE_TER_UM_USUARIO);
+    public void validar(CreateAventureiroRequest request) {
+        if(request.getOrganizacao_id() == 0) {
+            exceptionService.lancar(ErroCatalogo.AVENTUREIRO_DEVE_TER_UMA_ORGANIZACAO);
         }
 
-        if(!organizacaoRepository.existsById(request.getOrganizacao_id()))
-        {
-            exceptionService.lancar(ErroCatalogo.USUARIO_INVALIDO);
-        };
-
-
+        if(!organizacaoRepository.existsById(request.getOrganizacao_id())) {
+            exceptionService.lancar(ErroCatalogo.ORGANIZACAO_NAO_EXISTE);
+        }
     }
-
 }

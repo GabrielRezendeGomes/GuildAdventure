@@ -21,7 +21,7 @@ public class ProdutoController {
         this.service = service;
     }
 
-    // Parte A
+
     @GetMapping("/busca/nome")
     public List<ProdutoDocument> buscarPorNome(@RequestParam String termo) { return service.buscarPorNome(termo); }
 
@@ -37,7 +37,7 @@ public class ProdutoController {
     @GetMapping("/busca/multicampos")
     public List<ProdutoDocument> buscarMultiCampos(@RequestParam String termo) { return service.buscarMultiCampos(termo); }
 
-    // Parte B
+
     @GetMapping("/busca/com-filtro")
     public List<ProdutoDocument> buscarComFiltro(@RequestParam String termo, @RequestParam String categoria) {
         return service.buscarComFiltro(termo, categoria);
@@ -53,7 +53,7 @@ public class ProdutoController {
         return service.buscaAvancada(categoria, raridade, min, max);
     }
 
-    // Parte C
+
     @GetMapping("/agregacoes/por-categoria")
     public Map<String, Long> agregacaoPorCategoria() throws IOException { return service.agregacaoPorCategoria(); }
 

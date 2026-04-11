@@ -2,6 +2,7 @@ package com.GuildAdventure.demo.Domain.Model.Aventura.entities;
 
 import com.GuildAdventure.demo.Domain.Model.Audit.entities.user_role_id;
 import com.GuildAdventure.demo.Domain.Model.Aventura.Enums.PapeisMissaoEnum;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -27,6 +28,7 @@ public class Participacao_missao
     @ManyToOne
     @MapsId("missaoId")
     @JoinColumn(name = "missao_id", nullable = false)
+    @JsonIgnore
     private MissaoEntity missaoid;
 
     @Column(name = "papel", nullable = false)

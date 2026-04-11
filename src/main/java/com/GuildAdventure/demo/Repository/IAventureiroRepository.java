@@ -1,29 +1,32 @@
 package com.GuildAdventure.demo.Repository;
 
+import com.GuildAdventure.demo.Domain.Model.Aventura.Enums.ClassTypeEnum;
 import com.GuildAdventure.demo.Domain.Model.Aventura.entities.AventureiroEntity;
 import com.GuildAdventure.demo.Domain.Model.Aventura.entities.MissaoEntity;
 import com.GuildAdventure.demo.Dto.AventureiroResponse;
 import com.GuildAdventure.demo.Dto.RankingResponse;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
 public interface IAventureiroRepository extends JpaRepository<AventureiroEntity, Long> {
 
         @Query("SELECT a FROM AventureiroEntity a WHERE LOWER(a.nome) LIKE LOWER(CONCAT('%', :nome, '%'))")
-        List<AventureiroEntity> buscaParcial(@Param("nome") String nome, Pageable pageable);
+        Page<AventureiroEntity> buscaParcial(@Param("nome") String nome, Pageable pageable);
 
-        @Query("SELECT a FROM AventureiroEntity a WHERE a.ativo = :status")
-        List<AventureiroEntity> buscaPorStatus(@Param("status") boolean status, Pageable pageable);
-
-        @Query("SELECT a FROM AventureiroEntity a WHERE LOWER(a.classe) LIKE LOWER(CONCAT('%', :classe, '%'))")
-        List<AventureiroEntity> buscaPorClasse(@Param("classe") String classe, Pageable pageable);
-
-        @Query("SELECT a FROM AventureiroEntity a WHERE a.nivel >= :nivel")
-        List<AventureiroEntity> buscarPorNivelMinimo(@Param("nivel") int nivel, Pageable pageable);
+        @Query("SELECT a FROM AventureiroEntity a " +
+                "WHERE (:status IS NULL OR a.ativo = :status) " +
+                "AND (:classe IS NULL OR a.classe = :classe) " +
+                "AND (:nivel IS NULL OR a.nivel >= :nivel)")
+        Page<AventureiroEntity> buscarComFiltros(
+                @Param("status") Boolean status,
+                @Param("classe") ClassTypeEnum classe,
+                @Param("nivel") Integer nivel,
+                Pageable pageable);
 
         @Query("SELECT new com.GuildAdventure.demo.Dto.AventureiroResponse(" +
                 "a.id, a.nome, a.classe, a.nivel, a.ativo, c, " +

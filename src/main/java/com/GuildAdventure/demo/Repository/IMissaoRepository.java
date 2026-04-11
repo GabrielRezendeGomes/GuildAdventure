@@ -16,14 +16,14 @@ import java.util.Optional;
 
 public interface IMissaoRepository extends JpaRepository<MissaoEntity, Long> {
 
-    // Relatório de Métricas
+
     @Query("SELECT new com.GuildAdventure.demo.Dto.MissaoMetricasResponse(" +
             "m.titulo, m.statusMissao, m.nivelPerigo, COUNT(p), COALESCE(SUM(p.recompensa), 0)) " +
             "FROM MissaoEntity m LEFT JOIN m.aventureirosInscritos p " +
             "GROUP BY m.id, m.titulo, m.statusMissao, m.nivelPerigo")
     List<MissaoMetricasResponse> gerarRelatorioMetricas();
 
-    // Listagem de Missões com Filtros
+
     @Query("SELECT m FROM MissaoEntity m " +
             "WHERE (:status IS NULL OR m.statusMissao = :status) " +
             "AND (:nivelPerigo IS NULL OR m.nivelPerigo = :nivelPerigo) " +
@@ -36,7 +36,7 @@ public interface IMissaoRepository extends JpaRepository<MissaoEntity, Long> {
             @Param("dataFim") OffsetDateTime dataFim,
             Pageable pageable);
 
-    // Detalhamento de Missão (Trazendo os aventureiros inscritos para evitar N+1)
+
     @Query("SELECT m FROM MissaoEntity m " +
             "LEFT JOIN FETCH m.aventureirosInscritos p " +
             "LEFT JOIN FETCH p.aventureiroid " +

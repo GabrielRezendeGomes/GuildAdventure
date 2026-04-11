@@ -38,4 +38,13 @@ public interface IMapper
     @Mapping(target = "status" , source = "ativo")
     AventureiroResponseSimples toSimpleResponse(AventureiroEntity aventureiro);
 
+    @Mapping(target = "participantes", source = "aventureirosInscritos")
+    MissaoResponse toMissaoResponse(MissaoEntity missao);
+
+    @Mapping(target = "aventureiroId", source = "aventureiroid.id")
+    @Mapping(target = "nomeAventureiro", source = "aventureiroid.nome")
+    ParticipacaoMissaoResponse toParticipacaoResponse(com.GuildAdventure.demo.Domain.Model.Aventura.entities.Participacao_missao participacao);
+
+
+
 }

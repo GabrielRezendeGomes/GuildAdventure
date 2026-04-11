@@ -40,6 +40,9 @@ public class UsuarioEntity {
     @Column(name = "updated_at", nullable = false)
     private OffsetDateTime updated_at;
 
+    @Column(name = "status")
+    private String status;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "organizacao_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
