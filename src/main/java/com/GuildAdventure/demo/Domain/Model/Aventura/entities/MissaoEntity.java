@@ -45,7 +45,7 @@ public class MissaoEntity
     private OffsetDateTime dataFim;
 
     @OneToMany(mappedBy = "missaoid")
-    private Set<Participacao_missao> aventureirosInscritos = new HashSet<>();
+    private Set<ParticipacaoMissao> aventureirosInscritos = new HashSet<>();
 
 
     @PrePersist

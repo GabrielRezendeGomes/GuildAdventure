@@ -10,10 +10,10 @@ import java.time.OffsetDateTime;
 @Table(name = "user_roles", schema = "audit")
 @Getter
 @Setter
-public class User_RolesEntity
+public class UserRolesEntity
 {
     @EmbeddedId
-    private user_role_id id;
+    private UserRoleId id;
 
     @ManyToOne
     @MapsId("usuarioId")

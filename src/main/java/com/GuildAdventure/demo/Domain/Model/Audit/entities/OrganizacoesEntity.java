@@ -37,7 +37,7 @@ public class OrganizacoesEntity
     private Set<UsuarioEntity> usuarios = new HashSet<>();
 
     @OneToMany(mappedBy = "organizacao")
-    private Set<Api_keysEntity> apiKeys = new HashSet<>();
+    private Set<ApiKeysEntity> apiKeys = new HashSet<>();
 
     @OneToMany(mappedBy = "organizacao")
     private Set<MissaoEntity> missoes = new HashSet<>();

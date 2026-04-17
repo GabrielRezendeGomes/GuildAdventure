@@ -58,7 +58,7 @@ public class AventureiroEntity {
     private OffsetDateTime dataAtualizacao;
 
     @OneToMany(mappedBy = "aventureiroid")
-    private Set<Participacao_missao> missoes = new HashSet<>();
+    private Set<ParticipacaoMissao> missoes = new HashSet<>();
 
     @PrePersist
     public void OnCreate() {

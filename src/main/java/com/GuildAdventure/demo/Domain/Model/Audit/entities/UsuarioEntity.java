@@ -49,7 +49,7 @@ public class UsuarioEntity {
     private OrganizacoesEntity organizacao;
 
     @OneToMany(mappedBy = "usuario")
-    private List<User_RolesEntity> userRoles;
+    private List<UserRolesEntity> userRoles;
 
     @OneToMany(mappedBy = "usuarioCadastro")
     private List<AventureiroEntity> aventureirosCadastrados;

@@ -30,7 +30,7 @@ public interface IAventureiroRepository extends JpaRepository<AventureiroEntity,
 
         @Query("SELECT new com.GuildAdventure.demo.Dto.AventureiroResponse(" +
                 "a.id, a.nome, a.classe, a.nivel, a.ativo, c, " +
-                "(SELECT COUNT(p) FROM Participacao_missao p WHERE p.aventureiroid = a)) " +
+                "(SELECT COUNT(p) FROM ParticipacaoMissao p WHERE p.aventureiroid = a)) " +
                 "FROM AventureiroEntity a LEFT JOIN a.companheiro c WHERE a.id = :id")
         AventureiroResponse buscarAventureiroCompleto(@Param("id") Long id);
 
@@ -41,7 +41,7 @@ public interface IAventureiroRepository extends JpaRepository<AventureiroEntity,
         List<RankingResponse> gerarRankingParticipacao();
 
         @Query(value = "SELECT m.* FROM aventura.missao m " +
-                "JOIN aventura.participacao_missao p ON m.id = p.missao_id " +
+                "JOIN aventura.ParticipacaoMissao p ON m.id = p.missao_id " +
                 "WHERE p.aventureiro_id = :aventureiroId " +
                 "ORDER BY p.data_registro DESC LIMIT 1", nativeQuery = true)
         MissaoEntity buscarUltimaMissaoDoAventureiro(@Param("aventureiroId") Long aventureiroId);

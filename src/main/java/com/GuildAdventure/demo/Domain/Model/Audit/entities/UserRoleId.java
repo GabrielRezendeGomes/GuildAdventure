@@ -7,14 +7,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 @Embeddable
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
-public class user_role_id implements Serializable {
+public class UserRoleId implements Serializable {
     private Long usuarioId;
     private Long roleId;
 }

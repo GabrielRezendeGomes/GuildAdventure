@@ -34,7 +34,7 @@ public class RolesEntity {
     private OffsetDateTime createdAt;
 
     @OneToMany(mappedBy = "role")
-    private List<User_RolesEntity> usuariosNoPapel;
+    private List<UserRolesEntity> usuariosNoPapel;
 
     @ManyToMany
     @JoinTable(name = "role_permissions",

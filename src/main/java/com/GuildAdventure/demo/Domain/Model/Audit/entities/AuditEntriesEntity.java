@@ -12,7 +12,7 @@ import java.time.OffsetDateTime;
 @Table(name = "audit_entries", schema = "audit")
 @Getter
 @Setter
-public class audit_entriesEntity
+public class AuditEntriesEntity
 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,7 +28,7 @@ public class audit_entriesEntity
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "actor_api_key_id")
-    private Api_keysEntity actorApiKeyId;
+    private ApiKeysEntity actorApiKeyId;
 
     @Column(nullable = false)
     private String action;

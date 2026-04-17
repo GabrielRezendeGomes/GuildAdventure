@@ -1,8 +1,8 @@
 package com.GuildAdventure.demo.Dto;
 
-import com.GuildAdventure.demo.Domain.Model.Audit.entities.OrganizacoesEntity;
 import com.GuildAdventure.demo.Domain.Model.Aventura.entities.AventureiroEntity;
 import com.GuildAdventure.demo.Domain.Model.Aventura.entities.MissaoEntity;
+import com.GuildAdventure.demo.Domain.Model.Aventura.entities.ParticipacaoMissao;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -43,7 +43,7 @@ public interface IMapper
 
     @Mapping(target = "aventureiroId", source = "aventureiroid.id")
     @Mapping(target = "nomeAventureiro", source = "aventureiroid.nome")
-    ParticipacaoMissaoResponse toParticipacaoResponse(com.GuildAdventure.demo.Domain.Model.Aventura.entities.Participacao_missao participacao);
+    ParticipacaoMissaoResponse toParticipacaoResponse(ParticipacaoMissao participacao);
 
 
 

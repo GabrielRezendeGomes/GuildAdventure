@@ -1,6 +1,5 @@
 package com.GuildAdventure.demo.Domain.Model.Aventura.entities;
 
-import com.GuildAdventure.demo.Domain.Model.Audit.entities.user_role_id;
 import com.GuildAdventure.demo.Domain.Model.Aventura.Enums.PapeisMissaoEnum;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -15,10 +14,10 @@ import java.time.OffsetDateTime;
         uniqueConstraints = @UniqueConstraint(columnNames = {"missao_id", "aventureiro_id"}))
 @Getter
 @Setter
-public class Participacao_missao
+public class ParticipacaoMissao
 {
     @EmbeddedId
-    private participacao_missao_id id;
+    private ParticipacaoMissaoId id;
 
     @ManyToOne
     @MapsId("aventureiroId")
