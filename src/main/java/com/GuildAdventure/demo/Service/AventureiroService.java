@@ -1,6 +1,7 @@
 package com.GuildAdventure.demo.Service;
 
 import com.GuildAdventure.demo.Domain.Model.Aventura.Enums.ClassTypeEnum;
+import com.GuildAdventure.demo.Domain.Model.Aventura.Events.AventureiroAlteradoEvent;
 import com.GuildAdventure.demo.Domain.Model.Aventura.entities.AventureiroEntity;
 import com.GuildAdventure.demo.Domain.Model.Aventura.entities.CompanheiroEntity;
 import com.GuildAdventure.demo.Domain.Model.Aventura.entities.MissaoEntity;
@@ -12,6 +13,7 @@ import com.GuildAdventure.demo.Repository.IOrganizacaoRepository;
 import com.GuildAdventure.demo.Repository.IUsuarioRepository;
 import com.GuildAdventure.demo.Service.Validations.AventureiroValidations.IAventureiroValidate;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -28,19 +30,21 @@ public class AventureiroService {
     private final AventureiroExceptionService exceptionService;
     private final IMapper mapper;
     private final List<IAventureiroValidate> validators;
+    private final ApplicationEventPublisher eventPublisher;
 
     public AventureiroService(IAventureiroRepository repository,
                               IOrganizacaoRepository organizacaoRepository,
                               IUsuarioRepository usuarioRepository,
                               AventureiroExceptionService exceptionService,
                               IMapper mapper,
-                              List<IAventureiroValidate> validators) {
+                              List<IAventureiroValidate> validators,ApplicationEventPublisher eventPublisher) {
         this.repository = repository;
         this.organizacaoRepository = organizacaoRepository;
         this.usuarioRepository = usuarioRepository;
         this.exceptionService = exceptionService;
         this.mapper = mapper;
         this.validators = validators;
+        this.eventPublisher = eventPublisher;
     }
 
     @Transactional
@@ -59,24 +63,6 @@ public class AventureiroService {
         return mapper.toSimpleResponse(repository.save(entity));
     }
 
-    @Transactional
-    public AventureiroResponseSimples atualizar(Long id, CreateAventureiroRequest request) {
-        AventureiroEntity aventureiro = repository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Aventureiro não encontrado"));
-
-        validators.forEach(v -> v.validar(request));
-
-        aventureiro.setNome(request.getNome());
-        aventureiro.setClasse(ClassTypeEnum.valueOf(request.getClasse().toUpperCase()));
-        aventureiro.setNivel(request.getNivel());
-
-        if (aventureiro.getOrganizacao().getId() != request.getOrganizacao_id()) {
-            aventureiro.setOrganizacao(organizacaoRepository.findById(request.getOrganizacao_id())
-                    .orElseThrow(() -> new EntityNotFoundException("Nova organização não encontrada")));
-        }
-
-        return mapper.toSimpleResponse(repository.save(aventureiro));
-    }
 
     @Transactional(readOnly = true)
     public Page<AventureiroResponseSimples> buscarParcial(String nome, Pageable pageable) {
@@ -141,28 +127,9 @@ public class AventureiroService {
                     .orElseThrow(() -> new EntityNotFoundException("Nova organização não encontrada")));
         }
 
+        eventPublisher.publishEvent(new AventureiroAlteradoEvent(id));
+
         return mapper.toSimpleResponse(repository.save(aventureiro));
-    }
-
-    @Transactional
-    public AventureiroEntity atualizarCompanheiro(Long id, CompanheiroEntity companheiro) {
-        AventureiroEntity aventureiro = repository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Aventureiro não encontrado."));
-
-        if (companheiro == null) {
-            throw new IllegalArgumentException("O corpo da requisição não pode ser vazio.");
-        }
-        if (companheiro.getNome() != null && companheiro.getNome().length() > 120) {
-            throw new IllegalArgumentException("Nome do companheiro deve ter no máximo 120 caracteres.");
-        }
-        if (companheiro.getLealdade() < 0 || companheiro.getLealdade() > 100) {
-            throw new IllegalArgumentException("Lealdade deve estar entre 0 e 100.");
-        }
-
-        companheiro.setAventureiro(aventureiro);
-        aventureiro.setCompanheiro(companheiro);
-
-        return repository.save(aventureiro);
     }
 
     @Transactional
@@ -201,7 +168,10 @@ public class AventureiroService {
         companheiro.setLealdade(request.getLealdade());
 
         aventureiro.setCompanheiro(companheiro);
+
         repository.save(aventureiro);
+
+        eventPublisher.publishEvent(new AventureiroAlteradoEvent(id));
 
         return obterPerfilCompleto(id);
     }

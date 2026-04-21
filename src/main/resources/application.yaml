@@ -3,13 +3,18 @@ spring:
     name: demo
   elasticsearch:
     uris: http://localhost:9280
+  cache:
+    type: caffeine
+    cache-names:
+      - painelTatico
+    caffeine:
+      spec: maximumSize=500,expireAfterAccess=24h
 
   datasource:
     url: jdbc:postgresql://localhost:5432/postgres
     username: postgres
     password: '123456'
     driver-class-name: org.postgresql.Driver
-
 
   jpa:
     hibernate:

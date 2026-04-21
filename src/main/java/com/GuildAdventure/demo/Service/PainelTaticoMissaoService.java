@@ -18,9 +18,10 @@ public class PainelTaticoMissaoService {
     }
 
 
-    @Cacheable("topMissoes15Dias")
+    @Cacheable(value = "painelTatico", key = "'top15Dias'")
     public List<PainelTaticoMissaoEntity> getTop15Dias() {
         OffsetDateTime quinzeDiasAtras = OffsetDateTime.now().minusDays(15);
+        System.out.println("### BUSCANDO NO BANCO DE DADOS (VIEW) ###");
         return repository.buscarTop10Recentes(quinzeDiasAtras);
     }
 }
