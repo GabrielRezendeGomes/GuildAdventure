@@ -24,14 +24,18 @@ public interface IMissaoRepository extends JpaRepository<MissaoEntity, Long> {
     List<MissaoMetricasResponse> gerarRelatorioMetricas();
 
 
-    @Query("SELECT m FROM MissaoEntity m " +
-            "WHERE (:status IS NULL OR m.statusMissao = :status) " +
-            "AND (:nivelPerigo IS NULL OR m.nivelPerigo = :nivelPerigo) " +
-            "AND (cast(:dataInicio as timestamp) IS NULL OR m.dataCriacao >= :dataInicio) " +
-            "AND (cast(:dataFim as timestamp) IS NULL OR m.dataCriacao <= :dataFim)")
-    Page<MissaoEntity> buscarComFiltros(
+    @Query("SELECT m FROM MissaoEntity m WHERE m.statusMissao = :status")
+    Page<MissaoEntity> buscarPorStatus(
             @Param("status") StatusMissaoEnum status,
+            Pageable pageable);
+
+    @Query("SELECT m FROM MissaoEntity m WHERE m.nivelPerigo = :nivelPerigo")
+    Page<MissaoEntity> buscarPorNivelPerigo(
             @Param("nivelPerigo") NivelDePerigoTypeEnum nivelPerigo,
+            Pageable pageable);
+
+    @Query("SELECT m FROM MissaoEntity m WHERE m.dataCriacao >= :dataInicio AND m.dataCriacao <= :dataFim")
+    Page<MissaoEntity> buscarPorDataCriacao(
             @Param("dataInicio") OffsetDateTime dataInicio,
             @Param("dataFim") OffsetDateTime dataFim,
             Pageable pageable);
