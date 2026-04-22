@@ -113,7 +113,7 @@ public class ProdutoElasticService {
         Map<String, Long> result = new HashMap<>();
         response.aggregations().get("faixas").range().buckets().array().forEach(b -> {
             String key = (b.from() != null ? String.valueOf(b.from()) : "0") + " - " +
-                    (b.to() != null ? String.valueOf(b.to()) : "∞");
+                    (b.to() != null ? String.valueOf(b.to()) : "...");
             result.put(key, b.docCount());
         });
         return result;

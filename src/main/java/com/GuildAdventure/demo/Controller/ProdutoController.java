@@ -23,16 +23,16 @@ public class ProdutoController {
 
 
     @GetMapping("/busca/nome")
-    public List<ProdutoDocument> buscarPorNome(@RequestParam String termo) { return service.buscarPorNome(termo); }
+    public List<ProdutoDocument> buscarPorNome(@RequestParam String nome) { return service.buscarPorNome(nome); }
 
     @GetMapping("/busca/descricao")
-    public List<ProdutoDocument> buscarPorDescricao(@RequestParam String termo) { return service.buscarPorDescricao(termo); }
+    public List<ProdutoDocument> buscarPorDescricao(@RequestParam String descricao) { return service.buscarPorDescricao(descricao); }
 
     @GetMapping("/busca/frase")
-    public List<ProdutoDocument> buscarPorFrase(@RequestParam String termo) { return service.buscarPorFraseExata(termo); }
+    public List<ProdutoDocument> buscarPorFrase(@RequestParam String frase) { return service.buscarPorFraseExata(frase); }
 
     @GetMapping("/busca/fuzzy")
-    public List<ProdutoDocument> buscarFuzzy(@RequestParam String termo) { return service.buscarFuzzy(termo); }
+    public List<ProdutoDocument> buscarFuzzy(@RequestParam String nome) { return service.buscarFuzzy(nome); }
 
     @GetMapping("/busca/multicampos")
     public List<ProdutoDocument> buscarMultiCampos(@RequestParam String termo) { return service.buscarMultiCampos(termo); }
